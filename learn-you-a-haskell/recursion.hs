@@ -30,6 +30,6 @@ left_pad x pad s
 quick_sort :: (Ord a) => [a] -> [a]
 quick_sort [] = []
 quick_sort (pivot : xs) =
-  let smaller = quick_sort [a | a <- xs, a <= pivot]
-      bigger = quick_sort [a | a <- xs, a > pivot]
+  let smaller = quick_sort (filter (<= pivot) xs)
+      bigger = quick_sort (filter (> pivot) xs)
    in smaller ++ [pivot] ++ bigger
