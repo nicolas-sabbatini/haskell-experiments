@@ -35,6 +35,15 @@ largest_divisible list_start target = head (filter can_div [list_start, list_sta
 sum_odd_squares_till :: (Integral a) => a -> a
 sum_odd_squares_till limit = sum (takeWhile (< limit) (filter odd (map (^ 2) [1 ..])))
 
+sum_odd_squares_till_v2 :: (Integral a) => a -> a
+sum_odd_squares_till_v2 limit = sum . takeWhile (< limit) . filter odd . map (^ 2) $ [1 ..]
+
+sum_odd_squares_till_v3 :: (Integral a) => a -> a
+sum_odd_squares_till_v3 limit = sum take_untill
+  where
+    take_untill = takeWhile (< limit) odd_squares
+    odd_squares = filter odd . map (^ 2) $ [1 ..]
+
 -- With lambdas: length ( filter (\ xs -> length xs < 10) (map chain [1..1000]))
 -- With sections: length (let g xs = length xs < 10 in filter g (map chain [1..1000]))
 chain :: (Integral a) => a -> [a]
@@ -51,3 +60,7 @@ elem_fold y = foldl (\acc x -> (x == y) || acc) False
 
 map_foldr :: (a -> b) -> [a] -> [b]
 map_foldr f = foldr (\x acc -> f x : acc) []
+
+-- negate_abs = map (\x -> negate (abs x))
+negate_abs :: (Num a) => [a] -> [a]
+negate_abs = map (negate . abs)
